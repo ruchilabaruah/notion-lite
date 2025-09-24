@@ -1,15 +1,26 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import NoteEditor from "./pages/NoteEditor";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div className="p-2 m-4 font-bold border border-red-100 md:border-red-500">
-      Hello
-    </div>
+    <BrowserRouter>
+      <div className="flex gap-4 p-4 bg-gray-100 border-b">
+        <Link to="/" className="text-blue-500 hover:underline">
+          Home
+        </Link>
+        <Link to="/dashboard" className="text-blue-500 hover:underline">
+          Dashboard
+        </Link>
+      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/note/:id" element={<NoteEditor />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
