@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-import NoteEditor from "./pages/NoteEditor";
+import NoteEditor from "./components/NoteEditor";
 
 function App() {
   return (
