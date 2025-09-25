@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import NoteCard from "../components/NoteCard";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { useState } from "react";
 import NoteEditor from "../components/NoteEditor";
 
 const Dashboard = () => {
@@ -16,6 +16,7 @@ const Dashboard = () => {
       content: "",
     };
     setNotes([newNote, ...notes]);
+    setEditingNote(newNote);
   };
 
   const saveNote = (updatedNote) => {
@@ -23,6 +24,13 @@ const Dashboard = () => {
       note.id === updatedNote.id ? updatedNote : note
     );
     setNotes(updatedNotes);
+  };
+
+  // Delete note
+  const deleteNote = (noteId) => {
+    const filtered = notes.filter((note) => note.id !== noteId);
+    setNotes(filtered);
+    setEditingNote(null);
   };
 
   return (
@@ -60,6 +68,7 @@ const Dashboard = () => {
           note={editingNote}
           onClose={() => setEditingNote(null)}
           onSave={saveNote}
+          onDelete={() => deleteNote(editingNote.id)}
         />
       )}
     </Box>

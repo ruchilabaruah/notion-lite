@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -8,9 +9,8 @@ import {
 } from "@mui/material";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect, useState } from "react";
 
-const NoteEditor = ({ open, note, onClose, onSave }) => {
+const NoteEditor = ({ open, note, onClose, onSave, onDelete }) => {
   const [title, setTitle] = useState(note?.title || "");
 
   const editor = useEditor({
@@ -24,8 +24,12 @@ const NoteEditor = ({ open, note, onClose, onSave }) => {
     onClose();
   };
 
+  const handleDelete = () => {
+    onDelete(note.id);
+  };
+
   useEffect(() => {
-    if (note && editor) {
+    if (note) {
       setTitle(note.title || "");
       editor?.commands.setContent(note.content || "");
     }
@@ -52,6 +56,9 @@ const NoteEditor = ({ open, note, onClose, onSave }) => {
         </div>
       </DialogContent>
       <DialogActions>
+        <Button onClick={handleDelete} color="error">
+          Delete
+        </Button>
         <Button onClick={onClose}>Cancel</Button>
         <Button onClick={handleSave} variant="contained">
           Save
