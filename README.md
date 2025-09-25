@@ -8,3 +8,4 @@
 6. Install tiptap basic packages
 7. Implement NoteEditor Component which will be displayed when user tries to edit a note.
 8. Basic NoteEditor component built with MUI dialog component. This dialog will have the Tiptap editor in the next step.
+9. Add Tipdat editor inside NoteEditor. User can now edit title and content and save.
