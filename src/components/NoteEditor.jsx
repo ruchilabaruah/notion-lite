@@ -9,9 +9,11 @@ import {
 } from "@mui/material";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useNotes } from "../context/NotesContext";
 
-const NoteEditor = ({ open, note, onClose, onSave, onDelete }) => {
+const NoteEditor = ({ open, note, onClose }) => {
   const [title, setTitle] = useState(note?.title || "");
+  const { updateNote, deleteNote } = useNotes();
 
   const editor = useEditor({
     extensions: [StarterKit],
@@ -20,12 +22,13 @@ const NoteEditor = ({ open, note, onClose, onSave, onDelete }) => {
 
   const handleSave = () => {
     // Save logic here
-    onSave({ ...note, title, content: editor.getHTML() });
+    updateNote({ ...note, title, content: editor.getHTML() });
     onClose();
   };
 
   const handleDelete = () => {
-    onDelete(note.id);
+    deleteNote(note.id);
+    onClose();
   };
 
   useEffect(() => {

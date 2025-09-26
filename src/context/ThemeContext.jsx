@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 const ThemeContext = createContext();
 
-export const ThemeProvider = ({ children }) => {
+const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(() => {
     // Load saved theme preference
     return localStorage.getItem("darkMode") === "true";
@@ -31,4 +31,13 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-export const useThemeContext = () => useContext(ThemeContext);
+const useTheme = () => {
+  const context = useContext(ThemeContext);
+  // Inspired by Kent C Dodds documentation
+  if (context === undefined) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+};
+
+export { ThemeProvider, useTheme };

@@ -4,37 +4,18 @@ import AddIcon from "@mui/icons-material/Add";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import NoteCard from "../components/NoteCard";
-import useLocalStorage from "../hooks/useLocalStorage";
 import NoteEditor from "../components/NoteEditor";
-import { useThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
+import { useNotes } from "../context/NotesContext";
 
 const Dashboard = () => {
-  const [notes, setNotes] = useLocalStorage("notes", []);
-  const { darkMode, setDarkMode } = useThemeContext();
   const [editingNote, setEditingNote] = useState(null);
+  const { darkMode, setDarkMode } = useTheme();
+  const { notes, createNote } = useNotes();
 
-  const createNote = () => {
-    const newNote = {
-      id: Date.now(),
-      title: `Untitled Note ${notes.length + 1}`,
-      content: "",
-    };
-    setNotes([newNote, ...notes]);
+  const handleCreateNote = () => {
+    const newNote = createNote();
     setEditingNote(newNote);
-  };
-
-  const saveNote = (updatedNote) => {
-    const updatedNotes = notes.map((note) =>
-      note.id === updatedNote.id ? updatedNote : note
-    );
-    setNotes(updatedNotes);
-  };
-
-  // Delete note
-  const deleteNote = (noteId) => {
-    const filtered = notes.filter((note) => note.id !== noteId);
-    setNotes(filtered);
-    setEditingNote(null);
   };
 
   return (
@@ -45,7 +26,7 @@ const Dashboard = () => {
           <Button
             variant="contained"
             startIcon={<AddIcon />}
-            onClick={createNote}
+            onClick={handleCreateNote}
           >
             Create New Note
           </Button>
@@ -78,8 +59,6 @@ const Dashboard = () => {
           open={!!editingNote}
           note={editingNote}
           onClose={() => setEditingNote(null)}
-          onSave={saveNote}
-          onDelete={() => deleteNote(editingNote.id)}
         />
       )}
     </Box>
