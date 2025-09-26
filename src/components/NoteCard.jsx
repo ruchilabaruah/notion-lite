@@ -5,7 +5,11 @@ const NoteCard = ({ note, onClick }) => {
     <Card onClick={onClick}>
       <CardContent>
         <Typography variant="h6">{note.title}</Typography>
-        <Typography variant="body2">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          className="line-clamp-3"
+        >
           {note.content || "(empty note)"}
         </Typography>
       </CardContent>

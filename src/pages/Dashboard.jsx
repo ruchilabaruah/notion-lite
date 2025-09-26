@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 import NoteCard from "../components/NoteCard";
 import useLocalStorage from "../hooks/useLocalStorage";
 import NoteEditor from "../components/NoteEditor";
+import { useThemeContext } from "../context/ThemeContext";
 
 const Dashboard = () => {
   const [notes, setNotes] = useLocalStorage("notes", []);
+  const { darkMode, setDarkMode } = useThemeContext();
   const [editingNote, setEditingNote] = useState(null);
 
   const createNote = () => {
@@ -34,16 +38,22 @@ const Dashboard = () => {
   };
 
   return (
-    <Box className="p-6">
+    <Box className="p-6 min-h-screen">
       <Box className="flex justify-between items-center">
         <Typography variant="h4">My Notes</Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={createNote}
-        >
-          Create New Note
-        </Button>
+
+        <Box className="flex gap-2">
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={createNote}
+          >
+            Create New Note
+          </Button>
+          <IconButton onClick={() => setDarkMode(!darkMode)}>
+            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
+        </Box>
       </Box>
 
       {/* Notes Grid */}
