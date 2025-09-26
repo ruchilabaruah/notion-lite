@@ -41,7 +41,6 @@ const Dashboard = () => {
     <Box className="p-6 min-h-screen">
       <Box className="flex justify-between items-center">
         <Typography variant="h4">My Notes</Typography>
-
         <Box className="flex gap-2">
           <Button
             variant="contained"
@@ -62,13 +61,15 @@ const Dashboard = () => {
           No notes yet. Click "Create New Note" to get started.
         </Typography>
       ) : (
-        <Grid container spacing={3}>
+        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 py-4">
           {notes.map((note) => (
-            <Grid item xs={12} sm={6} md={4} key={note.id}>
-              <NoteCard note={note} onClick={() => setEditingNote(note)} />
-            </Grid>
+            <NoteCard
+              key={note.id}
+              note={note}
+              onClick={() => setEditingNote(note)}
+            />
           ))}
-        </Grid>
+        </div>
       )}
 
       {/* Note Editor */}
