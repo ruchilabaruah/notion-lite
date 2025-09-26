@@ -20,6 +20,7 @@ A lightweight notes dashboard built with **React, Vite, and Material-UI**, featu
 - TipTap for rich text editor
 - React Context for state
 - LocalStorage persistence
+- Vercel deployed
 
 ## 📦 Installation
 
@@ -44,4 +45,5 @@ npm run dev
 10. Add delete functionality to delete a note
 11. MUI dark and light mode themes supported
 12. Notes handling in a custom hook
+13. Deployed app in Vercel
 ```
