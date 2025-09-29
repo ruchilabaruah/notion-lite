@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
+import { lazy, Suspense, useState } from "react";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -17,6 +17,8 @@ const Dashboard = () => {
     const newNote = createNote();
     setEditingNote(newNote);
   };
+
+  const NoteEditor = lazy(() => import("../components/NoteEditor"));
 
   return (
     <Box className="p-6 min-h-screen">
@@ -55,11 +57,13 @@ const Dashboard = () => {
 
       {/* Note Editor */}
       {editingNote && (
-        <NoteEditor
-          open={!!editingNote}
-          note={editingNote}
-          onClose={() => setEditingNote(null)}
-        />
+        <Suspense fallback={<div>Loading editor...</div>}>
+          <NoteEditor
+            open={!!editingNote}
+            note={editingNote}
+            onClose={() => setEditingNote(null)}
+          />
+        </Suspense>
       )}
     </Box>
   );

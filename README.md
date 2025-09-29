@@ -46,4 +46,5 @@ npm run dev
 11. MUI dark and light mode themes supported
 12. Notes handling in a custom hook
 13. Deployed app in Vercel
+14. Lazy load NodeEditor component
 ```
