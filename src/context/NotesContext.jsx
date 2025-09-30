@@ -1,36 +1,39 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { ACTIONS, notesReducer } from "./notesReducer";
 
 const NotesContext = createContext();
 
 const NotesProvider = ({ children }) => {
-  const [notes, setNotes] = useLocalStorage("notes", []);
+  const [savedNotes, setSavedNotes] = useLocalStorage("notes", []);
+  const [notes, dispatch] = useReducer(notesReducer, savedNotes);
+
+  useEffect(() => {
+    setSavedNotes(notes);
+  }, [notes, setSavedNotes]);
 
   const createNote = () => {
     const newNote = {
       id: Date.now(),
-      title: `Untitled Note ${notes.length + 1}`,
+      title: `Untitled Note ${savedNotes.length + 1}`,
       content: "",
     };
-    setNotes([newNote, ...notes]);
+    dispatch({ type: ACTIONS.CREATE, payload: newNote });
     return newNote;
   };
 
   const updateNote = (updatedNote) => {
-    const updatedNotes = notes.map((note) =>
-      note.id === updatedNote.id ? updatedNote : note
-    );
-    setNotes(updatedNotes);
+    dispatch({ type: ACTIONS.UPDATE, payload: updatedNote });
   };
 
-  // Delete note
   const deleteNote = (noteId) => {
-    const filtered = notes.filter((note) => note.id !== noteId);
-    setNotes(filtered);
+    dispatch({ type: ACTIONS.DELETE, payload: noteId });
   };
 
   return (
-    <NotesContext.Provider value={{ notes, createNote, updateNote, deleteNote }}>
+    <NotesContext.Provider
+      value={{ notes: savedNotes, createNote, updateNote, deleteNote }}
+    >
       {children}
     </NotesContext.Provider>
   );

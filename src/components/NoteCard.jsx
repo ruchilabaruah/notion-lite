@@ -2,7 +2,7 @@ import { Card, CardContent, Typography } from "@mui/material";
 
 const NoteCard = ({ note, onClick }) => {
   return (
-    <Card onClick={onClick}>
+    <Card onClick={onClick} className="cursor-pointer">
       <CardContent>
         <Typography variant="h6">{note.title}</Typography>
         <Typography
